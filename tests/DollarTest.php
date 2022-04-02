@@ -5,7 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
 class Dollar {
-    public $amount;
+    private $amount;
 
     public function __construct($amount)
     {
@@ -26,10 +26,8 @@ class DollarTest extends TestCase
     public function testMultiplication(): void
     {
         $five = new Dollar(5);
-        $product = $five->times(2);
-        self::assertEquals(10, $product->amount);
-        $product = $five->times(3);
-        self::assertEquals(15, $product->amount);
+        self::assertEquals(new Dollar(10), $five->times(2));
+        self::assertEquals(new Dollar(15), $five->times(3));
     }
 
     public function testEquality(): void {

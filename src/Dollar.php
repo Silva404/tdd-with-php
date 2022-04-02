@@ -6,7 +6,12 @@ class Dollar extends Money
 {
     public function times(int $multiplier): Money
     {
-        return new Dollar($this->amount * $multiplier);
+        return Money::dollar($this->amount * $multiplier);
+    }
+
+    public function currency(): string
+    {
+        return $this->currency;
     }
 }
 

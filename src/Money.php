@@ -2,7 +2,8 @@
 
 namespace Example;
 
-abstract class Money {
+class Money
+{
     protected $amount;
     protected $currency;
 
@@ -14,17 +15,27 @@ abstract class Money {
 
     public function equals(Money $object): bool
     {
-        return $this->amount === $object->amount;
+        return $this->amount === $object->amount
+            && $this->currency() === $object->currency;
     }
 
-    abstract public function times(int $multiplier): Money;
+    public function times(int $multiplier): Money
+    {
+        return new Money($this->amount * $multiplier, $this->currency);
+    }
 
-    abstract public function currency(): string;
+    public function currency(): string
+    {
+        return $this->currency;
+    }
 
-    public static function dollar(int $amount): Dollar {
+    public static function dollar(int $amount): Dollar
+    {
         return new Dollar($amount, "USD");
     }
-    public static function franc(int $amount): Franc {
+
+    public static function franc(int $amount): Franc
+    {
         return new Franc($amount, "CHF");
     }
 }

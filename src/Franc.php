@@ -8,9 +8,4 @@ class Franc extends Money
     {
         return Money::franc($this->amount * $multiplier);
     }
-
-    public function currency(): string
-    {
-        return $this->currency;
-    }
 }

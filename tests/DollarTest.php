@@ -4,43 +4,33 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-class Dollar
-{
-    private $amount;
+class Money {
+    protected $amount;
 
-    public function __construct($amount)
+    public function __construct(int $amount)
     {
         $this->amount = $amount;
     }
 
-    public function times($multiplier): Dollar
-    {
-        return new Dollar($this->amount * $multiplier);
-    }
-
-    public function equals(Dollar $object): bool
+    public function equals(Money $object): bool
     {
         return $this->amount === $object->amount;
     }
 }
 
-class Franc
+class Dollar extends Money
 {
-    private $amount;
-
-    public function __construct($amount)
+    public function times($multiplier): Dollar
     {
-        $this->amount = $amount;
+        return new Dollar($this->amount * $multiplier);
     }
+}
 
+class Franc extends Money
+{
     public function times($multiplier): Franc
     {
         return new Franc($this->amount * $multiplier);
-    }
-
-    public function equals(Franc $object): bool
-    {
-        return $this->amount === $object->amount;
     }
 }
 
@@ -64,5 +54,9 @@ class DollarTest extends TestCase
     {
         $dollar = new Dollar(5);
         self::assertTrue($dollar->equals(new Dollar(5)));
+        self::assertFalse($dollar->equals(new Dollar(6)));
+        $franc = new Franc(5);
+        self::assertTrue($franc->equals(new Franc(5)));
+        self::assertFalse($franc->equals(new Franc(6)));
     }
 }

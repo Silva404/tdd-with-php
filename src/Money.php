@@ -2,7 +2,7 @@
 
 namespace Example;
 
-class Money
+class Money implements Expression
 {
     protected $amount;
     protected $currency;
@@ -37,6 +37,12 @@ class Money
     public static function franc(int $amount): Money
     {
         return new Money($amount, "CHF");
+    }
+
+    public function plus(Money $addend): Expression
+    {
+        return new Money($addend->amount + $this->amount,
+            $this->currency);
     }
 }
 
